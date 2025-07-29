@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammar Guru - Call App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            padding: 30px;
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e1e5e9;
+        }
+
+        .nav-tab {
+            padding: 15px 30px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .nav-tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .nav-tab:hover {
+            color: #667eea;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Call Section */
+        .call-section {
+            text-align: center;
+        }
+
+        .call-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+        }
+
+        .call-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .call-title {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .call-description {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .btn {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Stats Section */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-weight: 600;
+        }
+
+        /* Call Status */
+        .call-status {
+            text-align: center;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            background: #f8f9fa;
+            border: 2px solid #e1e5e9;
+        }
+
+        .call-status.success {
+            background: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+
+        .call-status.error {
+            background: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+
+        /* Call Timer */
+        .call-timer {
+            text-align: center;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .timer-display {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .timer-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Lessons Section */
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .lesson-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 2px solid #e1e5e9;
+            transition: all 0.3s;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-color: #667eea;
+        }
+
+        .lesson-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .lesson-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .lesson-description {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .lesson-duration {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .lessons-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 Grammar Guru</h1>
+            <p>Call Your English Tutor</p>
+        </div>
+
+        <div class="main-content">
+            <!-- Navigation -->
+            <div class="nav-tabs">
+                <button class="nav-tab active" onclick="showTab('call')">📞 Make Call</button>
+                <button class="nav-tab" onclick="showTab('lessons')">📚 Lessons</button>
+            </div>
+
+            <!-- Call Tab -->
+            <div id="callTab" class="tab-content active">
+                <div class="call-section">
+                    <div class="call-card">
+                        <div class="call-icon">📞</div>
+                        <div class="call-title">Call Grammar Guru</div>
+                        <div class="call-description">Start a 10-minute tutoring session with your personal English tutor</div>
+                        <button class="btn" onclick="makeCall()" id="callBtn">
+                            <span id="callBtnText">Start Call</span>
+                        </button>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number" id="streakCount">0</div>
+                            <div class="stat-label">Day Streak</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalCalls">0</div>
+                            <div class="stat-label">Total Calls</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalMinutes">0</div>
+                            <div class="stat-label">Minutes Learned</div>
+                        </div>
+                    </div>
+
+                    <!-- Call Status -->
+                    <div id="callStatus" class="call-status" style="display: none;"></div>
+                    
+                    <!-- Call Timer -->
+                    <div id="callTimer" class="call-timer" style="display: none;">
+                        <div class="timer-display">
+                            <span id="timerMinutes">00</span>:<span id="timerSeconds">00</span>
+                        </div>
+                        <div class="timer-label">Call Duration</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lessons Tab -->
+            <div id="lessonsTab" class="tab-content">
+                <h2 style="margin-bottom: 30px; text-align: center; color: #333;">Available Lessons</h2>
+                <div class="lessons-grid" id="lessonsGrid">
+                    <div class="lesson-card" onclick="showLesson('Basic Grammar', 'Learn fundamental grammar rules and sentence structure')">
+                        <div class="lesson-icon">📝</div>
+                        <div class="lesson-title">Basic Grammar</div>
+                        <div class="lesson-description">Learn fundamental grammar rules and sentence structure</div>
+                        <div class="lesson-duration">10 minutes</div>
+                    </div>
+
+                    <div class="lesson-card" onclick="showLesson('Conversation Skills', 'Practice speaking and improve your fluency')">
+                        <div class="lesson-icon">🗣️</div>
+                        <div class="lesson-title">Conversation Skills</div>
+                        <div class="lesson-description">Practice speaking and improve your fluency</div>
+                        <div class="lesson-duration">10 minutes</div>
+                    </div>
+
+                    <div class="lesson-card" onclick="showLesson('Reading Comprehension', 'Enhance your reading skills and vocabulary')">
+                        <div class="lesson-icon">📖</div>
+                        <div class="lesson-title">Reading Comprehension</div>
+                        <div class="lesson-description">Enhance your reading skills and vocabulary</div>
+                        <div class="lesson-duration">10 minutes</div>
+                    </div>
+
+                    <div class="lesson-card" onclick="showLesson('Writing Skills', 'Improve your writing and composition abilities')">
+                        <div class="lesson-icon">✍️</div>
+                        <div class="lesson-title">Writing Skills</div>
+                        <div class="lesson-description">Improve your writing and composition abilities</div>
+                        <div class="lesson-duration">10 minutes</div>
+                    </div>
+
+                    <div class="lesson-card" onclick="showLesson('Advanced Grammar', 'Master complex grammar concepts and usage')">
+                        <div class="lesson-icon">🎯</div>
+                        <div class="lesson-title">Advanced Grammar</div>
+                        <div class="lesson-description">Master complex grammar concepts and usage</div>
+                        <div class="lesson-duration">10 minutes</div>
+                    </div>
+
+                    <div class="lesson-card" onclick="showLesson('Business English', 'Learn professional English for workplace communication')">
+                        <div class="lesson-icon">🌍</div>
+                        <div class="lesson-title">Business English</div>
+                        <div class="lesson-description">Learn professional English for workplace communication</div>
+                        <div class="lesson-duration">10 minutes</div>
+                    </div>
+                </div>
+
+                <!-- Lesson Detail View -->
+                <div id="lessonDetail" style="display: none;">
+                    <div style="text-align: center; padding: 40px 20px;">
+                        <h2 id="lessonDetailTitle" style="margin-bottom: 20px; color: #333; font-size: 2rem;"></h2>
+                        <p id="lessonDetailDescription" style="color: #666; font-size: 1.1rem; line-height: 1.6; max-width: 600px; margin: 0 auto;"></p>
+                        <h3 id="dailyContentTitle" style="margin-top: 30px; color: #555; font-size: 1.5rem;"></h3>
+                        <div id="dailyContentText" style="text-align: left; padding: 30px; background: #f8f9fa; border-radius: 15px; font-size: 1.1rem; line-height: 1.8; max-width: 700px; margin: 20px auto; max-height: 500px; overflow-y: auto; border: 1px solid #e9ecef; box-shadow: 0 2px 10px rgba(0,0,0,0.1);"></div>
+                    </div>
+                    <div style="text-align: center; margin-top: 40px;">
+                        <button class="btn" onclick="backToLessons()" style="background: #667eea; color: white;">← Back to Lessons</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // User stats
+        let userStats = {
+            streak: 0,
+            totalCalls: 0,
+            totalMinutes: 0,
+            lastStreakDate: null // Add last streak update date
+        };
+
+        // Load stats from localStorage
+        function loadStats() {
+            const savedStats = localStorage.getItem('grammar_guru_stats');
+            if (savedStats) {
+                userStats = JSON.parse(savedStats);
+            }
+            updateStats();
+        }
+
+        // Save stats to localStorage
+        function saveStats() {
+            localStorage.setItem('grammar_guru_stats', JSON.stringify(userStats));
+        }
+
+        // Update stats display
+        function updateStats() {
+            document.getElementById('streakCount').textContent = userStats.streak;
+            document.getElementById('totalCalls').textContent = userStats.totalCalls;
+            document.getElementById('totalMinutes').textContent = userStats.totalMinutes;
+        }
+
+        // Show tab function
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Global variables for call management
+        let currentCallId = null;
+        let callStatusInterval = null;
+        let callTimerInterval = null;
+        let callStartTime = null;
+
+        // Make call function
+        async function makeCall() {
+            const callBtn = document.getElementById('callBtn');
+            const callBtnText = document.getElementById('callBtnText');
+            const callStatus = document.getElementById('callStatus');
+
+            callBtn.disabled = true;
+            callBtnText.textContent = 'Calling...';
+            callStatus.style.display = 'block';
+            callStatus.className = 'call-status';
+            callStatus.textContent = 'Initiating call...';
+
+            try {
+                const response = await fetch('/api/make-call', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        phoneNumber: '+916382693696'
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    currentCallId = result.callId;
+                    callStatus.className = 'call-status success';
+                    callStatus.textContent = 'Call initiated successfully! You should receive a call shortly.';
+                    
+                    // Start monitoring call status
+                    startCallStatusMonitoring(result.callId);
+                    
+                    // Update stats
+                    userStats.totalCalls++;
+                    userStats.totalMinutes += 10;
+                    
+                    // Day streak logic: only increment once per day
+                    const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+                    if (userStats.lastStreakDate !== today) {
+                        userStats.streak++;
+                        userStats.lastStreakDate = today;
+                    }
+                    saveStats();
+                    updateStats();
+                    
+                    console.log('Call initiated successfully');
+                } else {
+                    throw new Error(result.error || 'Failed to make call');
+                }
+            } catch (error) {
+                callStatus.className = 'call-status error';
+                callStatus.textContent = `Error: ${error.message}`;
+                console.error('Call error:', error);
+            } finally {
+                callBtn.disabled = false;
+                callBtnText.textContent = 'Start Call';
+            }
+        }
+
+        // Function to monitor call status
+        function startCallStatusMonitoring(callId) {
+            if (callStatusInterval) {
+                clearInterval(callStatusInterval);
+            }
+
+            callStatusInterval = setInterval(async () => {
+                try {
+                    const response = await fetch(`/api/call-status/${callId}`);
+                    const result = await response.json();
+
+                    if (result.success) {
+                        const callStatus = document.getElementById('callStatus');
+                        const callBtn = document.getElementById('callBtn');
+                        const callBtnText = document.getElementById('callBtnText');
+
+                        switch (result.callStatus) {
+                            case 'ringing':
+                                callStatus.textContent = '📞 Phone is ringing... Please answer the call!';
+                                callStatus.className = 'call-status';
+                                break;
+                            case 'in-progress':
+                                callStatus.textContent = '🎤 Call is active! Speak with your tutor.';
+                                callStatus.className = 'call-status success';
+                                callBtnText.textContent = 'End Call';
+                                callBtn.onclick = () => endCall(callId);
+                                
+                                // Start timer if not already started
+                                if (!callStartTime) {
+                                    startCallTimer();
+                                }
+                                break;
+                            case 'completed':
+                                callStatus.textContent = '✅ Call completed successfully! Great job!';
+                                callStatus.className = 'call-status success';
+                                stopCallStatusMonitoring();
+                                stopCallTimer();
+                                resetCallButton();
+                                break;
+                            case 'failed':
+                                callStatus.textContent = '❌ Call failed. Please try again.';
+                                callStatus.className = 'call-status error';
+                                stopCallStatusMonitoring();
+                                stopCallTimer();
+                                resetCallButton();
+                                break;
+                            default:
+                                callStatus.textContent = `📞 Call status: ${result.callStatus}`;
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error checking call status:', error);
+                }
+            }, 3000); // Check every 3 seconds
+        }
+
+        // Function to stop call status monitoring
+        function stopCallStatusMonitoring() {
+            if (callStatusInterval) {
+                clearInterval(callStatusInterval);
+                callStatusInterval = null;
+            }
+            currentCallId = null;
+        }
+
+        // Function to end call manually
+        async function endCall(callId) {
+            try {
+                const response = await fetch(`/api/end-call/${callId}`, {
+                    method: 'POST'
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    const callStatus = document.getElementById('callStatus');
+                    callStatus.textContent = '✅ Call ended successfully!';
+                    callStatus.className = 'call-status success';
+                    stopCallStatusMonitoring();
+                    stopCallTimer();
+                    resetCallButton();
+                }
+            } catch (error) {
+                console.error('Error ending call:', error);
+            }
+        }
+
+        // Function to start call timer
+        function startCallTimer() {
+            callStartTime = new Date();
+            const callTimer = document.getElementById('callTimer');
+            callTimer.style.display = 'block';
+            
+            callTimerInterval = setInterval(() => {
+                const now = new Date();
+                const duration = Math.floor((now - callStartTime) / 1000);
+                const minutes = Math.floor(duration / 60);
+                const seconds = duration % 60;
+                
+                document.getElementById('timerMinutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('timerSeconds').textContent = seconds.toString().padStart(2, '0');
+            }, 1000);
+        }
+
+        // Function to stop call timer
+        function stopCallTimer() {
+            if (callTimerInterval) {
+                clearInterval(callTimerInterval);
+                callTimerInterval = null;
+            }
+            callStartTime = null;
+            document.getElementById('callTimer').style.display = 'none';
+        }
+
+        // Function to reset call button
+        function resetCallButton() {
+            const callBtn = document.getElementById('callBtn');
+            const callBtnText = document.getElementById('callBtnText');
+            callBtn.disabled = false;
+            callBtnText.textContent = 'Start Call';
+            callBtn.onclick = makeCall;
+        }
+
+        // Daily content generator
+        function getDailyContent(lessonType) {
+            const today = new Date();
+            const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+            
+            const contentMap = {
+                'Basic Grammar': [
+                    {
+                        title: "Today's Grammar Lesson: Subject-Verb Agreement",
+                        content: `<h4 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.3rem;">Understanding Subject-Verb Agreement</h4>
+                        <p style="margin-bottom: 15px;">Subject-verb agreement is one of the fundamental rules of English grammar. It ensures that the verb in a sentence matches the subject in number and person. This rule applies to all tenses and forms of verbs.</p>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Basic Rules:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Singular subjects</strong> take singular verbs: "The cat <em>runs</em> fast."</li>
+                            <li style="margin-bottom: 8px;"><strong>Plural subjects</strong> take plural verbs: "The cats <em>run</em> fast."</li>
+                            <li style="margin-bottom: 8px;"><strong>Third person singular</strong> adds 's' to the verb: "He <em>works</em> hard."</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Special Cases:</h5>
+                        <p style="margin-bottom: 15px;"><strong>Collective nouns</strong> can be tricky. When the group acts as one unit, use singular: "The team <em>is</em> winning." When members act individually, use plural: "The team <em>are</em> arguing."</p>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Compound Subjects:</h5>
+                        <p style="margin-bottom: 15px;">Subjects joined by "and" usually take plural verbs: "Tom and Jerry <em>are</em> friends." However, subjects joined by "or" or "nor" follow the nearest subject: "Neither the teacher nor the students <em>were</em> ready."</p>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Indefinite Pronouns:</h5>
+                        <p style="margin-bottom: 15px;">Some indefinite pronouns are always singular: "Everyone <em>has</em> arrived." Others are always plural: "Many <em>have</em> tried." Some can be either depending on context: "All of the cake <em>is</em> gone" vs "All of the students <em>are</em> here."</p>`
+                    },
+                    {
+                        title: "Today's Grammar Lesson: Articles (A, An, The)",
+                        content: `<h4 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.3rem;">Mastering English Articles</h4>
+                        <p style="margin-bottom: 15px;">Articles are small words that come before nouns to indicate whether the noun is specific or general. English has three articles: 'a', 'an', and 'the'. Understanding when to use each one is crucial for clear communication.</p>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Indefinite Articles: A and An</h5>
+                        <p style="margin-bottom: 15px;">Use 'a' before words that begin with consonant sounds and 'an' before words that begin with vowel sounds. It's important to note that this rule is based on <strong>sound</strong>, not spelling.</p>
+                        
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>'A' examples:</strong> a university, a European, a one-time offer</li>
+                            <li style="margin-bottom: 8px;"><strong>'An' examples:</strong> an hour, an MBA, an honest person</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">The Definite Article: The</h5>
+                        <p style="margin-bottom: 15px;">Use 'the' when referring to a specific noun that both the speaker and listener know about, or when the noun is unique or has been mentioned before.</p>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">When to Use 'The':</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;">Specific items: "I saw <em>the</em> movie you recommended."</li>
+                            <li style="margin-bottom: 8px;">Unique things: "<em>The</em> sun rises in the east."</li>
+                            <li style="margin-bottom: 8px;">Superlatives: "<em>The</em> best solution is..."</li>
+                            <li style="margin-bottom: 8px;">Ordinal numbers: "<em>The</em> first chapter..."</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">When NOT to Use Articles:</h5>
+                        <p style="margin-bottom: 15px;">Don't use articles with proper nouns, uncountable nouns in general statements, or plural nouns in general statements: "I love music" (not "the music"), "Cats are independent animals" (not "the cats").</p>`
+                    },
+                    {
+                        title: "Today's Grammar Lesson: Verb Tenses",
+                        content: `<h4 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.3rem;">Understanding English Verb Tenses</h4>
+                        <p style="margin-bottom: 15px;">Verb tenses indicate when an action occurs - in the past, present, or future. English has twelve main tenses, each serving a specific purpose in communication. Mastering these tenses allows for precise expression of time and action.</p>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Present Tenses:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Simple Present:</strong> "I work" - habitual actions, facts, scheduled events</li>
+                            <li style="margin-bottom: 8px;"><strong>Present Continuous:</strong> "I am working" - actions happening now, temporary situations</li>
+                            <li style="margin-bottom: 8px;"><strong>Present Perfect:</strong> "I have worked" - completed actions with present relevance</li>
+                            <li style="margin-bottom: 8px;"><strong>Present Perfect Continuous:</strong> "I have been working" - ongoing actions that started in the past</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Past Tenses:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Simple Past:</strong> "I worked" - completed actions in the past</li>
+                            <li style="margin-bottom: 8px;"><strong>Past Continuous:</strong> "I was working" - ongoing actions in the past</li>
+                            <li style="margin-bottom: 8px;"><strong>Past Perfect:</strong> "I had worked" - actions completed before another past action</li>
+                            <li style="margin-bottom: 8px;"><strong>Past Perfect Continuous:</strong> "I had been working" - ongoing actions completed before another past action</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Future Tenses:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Simple Future:</strong> "I will work" - predictions, spontaneous decisions</li>
+                            <li style="margin-bottom: 8px;"><strong>Future Continuous:</strong> "I will be working" - ongoing actions in the future</li>
+                            <li style="margin-bottom: 8px;"><strong>Future Perfect:</strong> "I will have worked" - actions completed before a future time</li>
+                            <li style="margin-bottom: 8px;"><strong>Future Perfect Continuous:</strong> "I will have been working" - ongoing actions completed before a future time</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Key Usage Patterns:</h5>
+                        <p style="margin-bottom: 15px;">Use present perfect for experiences: "I have visited Paris." Use past perfect for sequencing: "I had finished dinner before she arrived." Use future perfect for completion: "By next year, I will have graduated."</p>`
+                    }
+                ],
+                'Conversation Skills': [
+                    {
+                        title: "Today's Vocabulary: Academic Words",
+                        content: `<h4 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.3rem;">Essential Academic Vocabulary</h4>
+                        <p style="margin-bottom: 15px;">Academic vocabulary consists of words commonly used in educational and professional contexts. These words help express complex ideas clearly and precisely, making them essential for academic writing and formal communication.</p>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Analysis Words:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Analyze:</strong> To examine something methodically by separating it into parts</li>
+                            <li style="margin-bottom: 8px;"><strong>Evaluate:</strong> To assess the value, quality, or significance of something</li>
+                            <li style="margin-bottom: 8px;"><strong>Assess:</strong> To estimate or determine the nature, quality, or ability of something</li>
+                            <li style="margin-bottom: 8px;"><strong>Examine:</strong> To inspect or scrutinize carefully</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Synthesis Words:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Synthesize:</strong> To combine different ideas or information into a coherent whole</li>
+                            <li style="margin-bottom: 8px;"><strong>Integrate:</strong> To combine or incorporate parts into a unified whole</li>
+                            <li style="margin-bottom: 8px;"><strong>Consolidate:</strong> To bring together or combine into a single unit</li>
+                            <li style="margin-bottom: 8px;"><strong>Merge:</strong> To combine or unite into a single entity</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Interpretation Words:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Interpret:</strong> To explain the meaning of something</li>
+                            <li style="margin-bottom: 8px;"><strong>Conclude:</strong> To reach a judgment or decision based on evidence</li>
+                            <li style="margin-bottom: 8px;"><strong>Infer:</strong> To deduce or conclude information from evidence and reasoning</li>
+                            <li style="margin-bottom: 8px;"><strong>Deduce:</strong> To reach a conclusion by reasoning from general principles</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Application in Writing:</h5>
+                        <p style="margin-bottom: 15px;">Use these words to strengthen your academic writing. Instead of "look at," use "analyze" or "examine." Instead of "put together," use "synthesize" or "integrate." This vocabulary helps convey precision and sophistication in your communication.</p>`
+                    },
+                    {
+                        title: "Today's Vocabulary: Business Terms",
+                        content: `<h4 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.3rem;">Essential Business Vocabulary</h4>
+                        <p style="margin-bottom: 15px;">Business vocabulary is crucial for professional communication and understanding corporate environments. These terms help you navigate business discussions, understand financial concepts, and communicate effectively in workplace settings.</p>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Financial Terms:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Revenue:</strong> The total income generated from business activities before expenses</li>
+                            <li style="margin-bottom: 8px;"><strong>Expenditure:</strong> Money spent on business operations, supplies, and services</li>
+                            <li style="margin-bottom: 8px;"><strong>Profit:</strong> The financial gain when revenue exceeds total costs and expenses</li>
+                            <li style="margin-bottom: 8px;"><strong>Investment:</strong> Money committed to a business venture with the expectation of future returns</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Management Terms:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Strategy:</strong> A long-term plan designed to achieve specific business objectives</li>
+                            <li style="margin-bottom: 8px;"><strong>Stakeholder:</strong> Any person or group with an interest in the business's success</li>
+                            <li style="margin-bottom: 8px;"><strong>Initiative:</strong> A new project or program designed to improve business performance</li>
+                            <li style="margin-bottom: 8px;"><strong>Implementation:</strong> The process of putting a plan or strategy into action</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Market Terms:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Market Share:</strong> The percentage of total sales in an industry controlled by a company</li>
+                            <li style="margin-bottom: 8px;"><strong>Competitive Advantage:</strong> A unique feature that gives a business an edge over competitors</li>
+                            <li style="margin-bottom: 8px;"><strong>Brand Recognition:</strong> The extent to which consumers can identify a brand</li>
+                            <li style="margin-bottom: 8px;"><strong>Customer Acquisition:</strong> The process of gaining new customers for a business</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Professional Usage:</h5>
+                        <p style="margin-bottom: 15px;">Understanding these terms helps you participate effectively in business meetings, understand financial reports, and communicate professionally with colleagues and clients. Use them appropriately in context to demonstrate business acumen.</p>`
+                    },
+                    {
+                        title: "Today's Vocabulary: Technology Terms",
+                        content: `<h4 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.3rem;">Modern Technology Vocabulary</h4>
+                        <p style="margin-bottom: 15px;">Technology vocabulary is essential in today's digital world. These terms help you understand modern systems, communicate about technical concepts, and navigate the rapidly evolving landscape of digital technology and innovation.</p>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Software Terms:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Algorithm:</strong> A step-by-step procedure or set of rules for solving problems</li>
+                            <li style="margin-bottom: 8px;"><strong>Interface:</strong> The point of interaction between a user and a computer system</li>
+                            <li style="margin-bottom: 8px;"><strong>Database:</strong> An organized collection of structured information stored electronically</li>
+                            <li style="margin-bottom: 8px;"><strong>Application Programming Interface (API):</strong> A set of rules allowing different software applications to communicate</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Security Terms:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Encryption:</strong> The process of converting information into a code to prevent unauthorized access</li>
+                            <li style="margin-bottom: 8px;"><strong>Authentication:</strong> The process of verifying the identity of a user or system</li>
+                            <li style="margin-bottom: 8px;"><strong>Firewall:</strong> A security system that monitors and controls network traffic</li>
+                            <li style="margin-bottom: 8px;"><strong>Malware:</strong> Software designed to harm or exploit computer systems</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Network Terms:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Bandwidth:</strong> The maximum rate of data transfer across a network connection</li>
+                            <li style="margin-bottom: 8px;"><strong>Latency:</strong> The time delay between sending and receiving data</li>
+                            <li style="margin-bottom: 8px;"><strong>Cloud Computing:</strong> The delivery of computing services over the internet</li>
+                            <li style="margin-bottom: 8px;"><strong>Virtual Private Network (VPN):</strong> A secure connection over a public network</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Practical Application:</h5>
+                        <p style="margin-bottom: 15px;">These terms are essential for understanding modern technology, troubleshooting issues, and communicating effectively in technical environments. They help bridge the gap between technical and non-technical audiences.</p>`
+                    }
+                ],
+                'Reading Comprehension': [
+                    {
+                        title: "Today's Comprehension: Short Story Analysis",
+                        content: `<h4 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.3rem;">Understanding Short Story Elements</h4>
+                        <p style="margin-bottom: 15px;">Short stories are powerful literary forms that convey complex themes and emotions in a condensed format. Understanding their structure and elements helps you appreciate literature and develop critical thinking skills.</p>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Story Structure:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Exposition:</strong> Introduction of characters, setting, and background information</li>
+                            <li style="margin-bottom: 8px;"><strong>Rising Action:</strong> Events that build tension and develop the conflict</li>
+                            <li style="margin-bottom: 8px;"><strong>Climax:</strong> The turning point where the conflict reaches its peak</li>
+                            <li style="margin-bottom: 8px;"><strong>Falling Action:</strong> Events that follow the climax and lead to resolution</li>
+                            <li style="margin-bottom: 8px;"><strong>Resolution:</strong> The conclusion where conflicts are resolved</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Literary Elements:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Character:</strong> Individuals who drive the story's action and development</li>
+                            <li style="margin-bottom: 8px;"><strong>Setting:</strong> The time and place where the story occurs</li>
+                            <li style="margin-bottom: 8px;"><strong>Plot:</strong> The sequence of events that make up the story</li>
+                            <li style="margin-bottom: 8px;"><strong>Theme:</strong> The central message or meaning of the story</li>
+                            <li style="margin-bottom: 8px;"><strong>Point of View:</strong> The perspective from which the story is told</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Reading Strategies:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Active Reading:</strong> Engaging with the text through highlighting and note-taking</li>
+                            <li style="margin-bottom: 8px;"><strong>Inference:</strong> Drawing conclusions based on textual evidence</li>
+                            <li style="margin-bottom: 8px;"><strong>Context Clues:</strong> Using surrounding information to understand unfamiliar words</li>
+                            <li style="margin-bottom: 8px;"><strong>Visualization:</strong> Creating mental images of the story's events and settings</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Analysis Techniques:</h5>
+                        <p style="margin-bottom: 15px;">When analyzing short stories, consider the author's purpose, the effectiveness of literary devices, and how the story's elements work together to create meaning. Look for symbolism, foreshadowing, and character development to deepen your understanding.</p>`
+                    },
+                    {
+                        title: "Today's Comprehension: News Article Analysis",
+                        content: `<h4 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.3rem;">Critical Reading of News Articles</h4>
+                        <p style="margin-bottom: 15px;">News articles provide information about current events, but they also reflect the perspectives and biases of their sources. Learning to read news critically helps you become a more informed citizen and develop media literacy skills.</p>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Article Structure:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Headline:</strong> The title that summarizes the main story and attracts readers</li>
+                            <li style="margin-bottom: 8px;"><strong>Lead Paragraph:</strong> The opening that answers who, what, when, where, why, and how</li>
+                            <li style="margin-bottom: 8px;"><strong>Body:</strong> Detailed information, quotes, and background context</li>
+                            <li style="margin-bottom: 8px;"><strong>Conclusion:</strong> Summary or implications of the story</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Information Sources:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Primary Sources:</strong> Direct witnesses, participants, or original documents</li>
+                            <li style="margin-bottom: 8px;"><strong>Secondary Sources:</strong> Information from other news outlets or experts</li>
+                            <li style="margin-bottom: 8px;"><strong>Official Statements:</strong> Information from government or organizational spokespersons</li>
+                            <li style="margin-bottom: 8px;"><strong>Expert Opinions:</strong> Analysis from qualified professionals in relevant fields</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Critical Evaluation:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Fact vs. Opinion:</strong> Distinguishing between verifiable facts and subjective viewpoints</li>
+                            <li style="margin-bottom: 8px;"><strong>Bias Detection:</strong> Identifying language that favors one perspective over others</li>
+                            <li style="margin-bottom: 8px;"><strong>Source Credibility:</strong> Evaluating the reliability and expertise of information sources</li>
+                            <li style="margin-bottom: 8px;"><strong>Context Analysis:</strong> Understanding the broader circumstances surrounding the story</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Media Literacy Skills:</h5>
+                        <p style="margin-bottom: 15px;">Develop the habit of reading multiple sources on the same topic, checking facts, and considering different perspectives. This helps you form well-informed opinions and avoid being misled by incomplete or biased reporting.</p>`
+                    },
+                    {
+                        title: "Today's Comprehension: Scientific Text Analysis",
+                        content: `<h4 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.3rem;">Understanding Scientific Literature</h4>
+                        <p style="margin-bottom: 15px;">Scientific texts present research findings, theories, and evidence-based conclusions. Reading scientific literature requires specific strategies to understand complex concepts, evaluate evidence, and distinguish between established facts and ongoing research.</p>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Scientific Method:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Observation:</strong> Noticing and recording natural phenomena or patterns</li>
+                            <li style="margin-bottom: 8px;"><strong>Hypothesis:</strong> A testable explanation for observed phenomena</li>
+                            <li style="margin-bottom: 8px;"><strong>Experiment:</strong> Controlled tests designed to validate or refute hypotheses</li>
+                            <li style="margin-bottom: 8px;"><strong>Analysis:</strong> Systematic examination of experimental results and data</li>
+                            <li style="margin-bottom: 8px;"><strong>Conclusion:</strong> Evidence-based interpretation of findings</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Research Components:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Abstract:</strong> Brief summary of the research question, methods, and key findings</li>
+                            <li style="margin-bottom: 8px;"><strong>Introduction:</strong> Background information and statement of the research problem</li>
+                            <li style="margin-bottom: 8px;"><strong>Methodology:</strong> Detailed description of how the research was conducted</li>
+                            <li style="margin-bottom: 8px;"><strong>Results:</strong> Presentation of data and statistical analyses</li>
+                            <li style="margin-bottom: 8px;"><strong>Discussion:</strong> Interpretation of results and their implications</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Evidence Evaluation:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Sample Size:</strong> The number of participants or observations in the study</li>
+                            <li style="margin-bottom: 8px;"><strong>Control Groups:</strong> Groups used for comparison to ensure valid results</li>
+                            <li style="margin-bottom: 8px;"><strong>Statistical Significance:</strong> The probability that results occurred by chance</li>
+                            <li style="margin-bottom: 8px;"><strong>Peer Review:</strong> Evaluation by other experts in the field before publication</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Critical Reading Approach:</h5>
+                        <p style="margin-bottom: 15px;">When reading scientific texts, focus on understanding the research question, evaluating the methodology, examining the evidence presented, and considering alternative explanations. Look for limitations in the study and how the findings contribute to broader scientific knowledge.</p>`
+                    }
+                ],
+                'Writing Skills': [
+                    {
+                        title: "Today's Writing: Essay Structure and Organization",
+                        content: `<h4 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.3rem;">Mastering Essay Writing Structure</h4>
+                        <p style="margin-bottom: 15px;">Effective essay writing requires clear organization, logical flow, and coherent structure. Understanding the components of a well-structured essay helps you communicate your ideas clearly and persuasively to your audience.</p>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Introduction Components:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Hook:</strong> An engaging opening that captures the reader's attention</li>
+                            <li style="margin-bottom: 8px;"><strong>Background:</strong> Context and information necessary to understand the topic</li>
+                            <li style="margin-bottom: 8px;"><strong>Thesis Statement:</strong> A clear, specific statement of your main argument</li>
+                            <li style="margin-bottom: 8px;"><strong>Roadmap:</strong> Brief overview of how you will support your thesis</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Body Paragraph Structure:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Topic Sentence:</strong> Introduces the main idea of the paragraph</li>
+                            <li style="margin-bottom: 8px;"><strong>Evidence:</strong> Facts, examples, or quotations that support your point</li>
+                            <li style="margin-bottom: 8px;"><strong>Analysis:</strong> Explanation of how the evidence supports your argument</li>
+                            <li style="margin-bottom: 8px;"><strong>Transition:</strong> Smooth connection to the next paragraph or idea</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Conclusion Elements:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Restatement:</strong> Rephrasing of your thesis in light of the evidence presented</li>
+                            <li style="margin-bottom: 8px;"><strong>Summary:</strong> Brief recap of your main supporting points</li>
+                            <li style="margin-bottom: 8px;"><strong>Significance:</strong> Explanation of why your argument matters</li>
+                            <li style="margin-bottom: 8px;"><strong>Closing Thought:</strong> A memorable final statement that reinforces your message</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Organizational Strategies:</h5>
+                        <p style="margin-bottom: 15px;">Use logical organization patterns such as chronological order, cause and effect, comparison and contrast, or order of importance. Ensure each paragraph has a clear purpose and contributes to your overall argument. Use transitions to create smooth connections between ideas.</p>`
+                    },
+                    {
+                        title: "Today's Writing: Descriptive Writing Techniques",
+                        content: `<h4 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.3rem;">Creating Vivid Descriptions</h4>
+                        <p style="margin-bottom: 15px;">Descriptive writing brings scenes, objects, and experiences to life through detailed language and sensory imagery. Effective description helps readers visualize and emotionally connect with your writing, making abstract concepts concrete and engaging.</p>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Sensory Details:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Sight:</strong> Visual descriptions including color, shape, size, and movement</li>
+                            <li style="margin-bottom: 8px;"><strong>Sound:</strong> Auditory elements like volume, pitch, rhythm, and quality</li>
+                            <li style="margin-bottom: 8px;"><strong>Touch:</strong> Textural qualities including temperature, pressure, and surface feel</li>
+                            <li style="margin-bottom: 8px;"><strong>Smell:</strong> Olfactory descriptions that evoke memories and emotions</li>
+                            <li style="margin-bottom: 8px;"><strong>Taste:</strong> Flavor descriptions including sweetness, bitterness, and texture</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Figurative Language:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Simile:</strong> Comparison using "like" or "as" to create vivid imagery</li>
+                            <li style="margin-bottom: 8px;"><strong>Metaphor:</strong> Direct comparison that suggests one thing is another</li>
+                            <li style="margin-bottom: 8px;"><strong>Personification:</strong> Giving human qualities to non-human objects or concepts</li>
+                            <li style="margin-bottom: 8px;"><strong>Hyperbole:</strong> Deliberate exaggeration for emphasis or effect</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Spatial Organization:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Left to Right:</strong> Describing objects or scenes from one side to the other</li>
+                            <li style="margin-bottom: 8px;"><strong>Top to Bottom:</strong> Moving from highest to lowest points in a scene</li>
+                            <li style="margin-bottom: 8px;"><strong>Near to Far:</strong> Describing from closest to most distant elements</li>
+                            <li style="margin-bottom: 8px;"><strong>Center Outward:</strong> Starting from a focal point and expanding outward</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Effective Description Strategies:</h5>
+                        <p style="margin-bottom: 15px;">Choose specific, concrete words over vague, abstract ones. Use active voice to create energy and immediacy. Include emotional context to help readers connect with your descriptions. Remember that good description shows rather than tells, allowing readers to experience the scene for themselves.</p>`
+                    },
+                    {
+                        title: "Today's Writing: Persuasive Writing Techniques",
+                        content: `<h4 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.3rem;">Mastering Persuasive Communication</h4>
+                        <p style="margin-bottom: 15px;">Persuasive writing aims to convince readers to adopt a particular viewpoint or take specific action. Effective persuasion combines logical reasoning, emotional appeal, and ethical credibility to create compelling arguments that resonate with your audience.</p>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Rhetorical Appeals (Ethos, Pathos, Logos):</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Ethos (Credibility):</strong> Establishing your authority and trustworthiness on the topic</li>
+                            <li style="margin-bottom: 8px;"><strong>Pathos (Emotion):</strong> Appealing to readers' emotions, values, and beliefs</li>
+                            <li style="margin-bottom: 8px;"><strong>Logos (Logic):</strong> Using facts, statistics, and logical reasoning to support your argument</li>
+                            <li style="margin-bottom: 8px;"><strong>Balance:</strong> Combining all three appeals for maximum persuasive impact</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Argument Structure:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Claim:</strong> A clear, debatable statement of your position</li>
+                            <li style="margin-bottom: 8px;"><strong>Evidence:</strong> Facts, examples, statistics, or expert opinions that support your claim</li>
+                            <li style="margin-bottom: 8px;"><strong>Warrant:</strong> Explanation of how your evidence supports your claim</li>
+                            <li style="margin-bottom: 8px;"><strong>Counterargument:</strong> Addressing opposing viewpoints to strengthen your position</li>
+                            <li style="margin-bottom: 8px;"><strong>Rebuttal:</strong> Responding to counterarguments with additional evidence</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Persuasive Techniques:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Repetition:</strong> Emphasizing key points through strategic repetition</li>
+                            <li style="margin-bottom: 8px;"><strong>Rhetorical Questions:</strong> Questions that guide readers toward your conclusion</li>
+                            <li style="margin-bottom: 8px;"><strong>Analogies:</strong> Comparing complex ideas to familiar concepts</li>
+                            <li style="margin-bottom: 8px;"><strong>Call to Action:</strong> Clear statement of what you want readers to do</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Ethical Persuasion:</h5>
+                        <p style="margin-bottom: 15px;">Effective persuasion respects your audience's intelligence and autonomy. Present accurate information, acknowledge opposing viewpoints fairly, and avoid manipulative tactics. Focus on building understanding and consensus rather than simply winning arguments.</p>`
+                    }
+                ],
+                'Advanced Grammar': [
+                    {
+                        title: "Today's Advanced Grammar: Subjunctive Mood",
+                        content: `<h4 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.3rem;">Mastering the Subjunctive Mood</h4>
+                        <p style="margin-bottom: 15px;">The subjunctive mood expresses wishes, hypothetical situations, and conditions that are contrary to fact. It's one of the most complex aspects of English grammar, requiring careful attention to verb forms and sentence structure.</p>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Present Subjunctive:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Base Form:</strong> Uses the base form of the verb regardless of subject: "I suggest that he <em>go</em> to the doctor."</li>
+                            <li style="margin-bottom: 8px;"><strong>Expressions:</strong> "It is important that," "I recommend that," "It's essential that"</li>
+                            <li style="margin-bottom: 8px;"><strong>Examples:</strong> "It's crucial that she <em>be</em> on time." "I insist that they <em>come</em> to the meeting."</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Past Subjunctive:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Were for All Subjects:</strong> "If I <em>were</em> you, I would accept the offer."</li>
+                            <li style="margin-bottom: 8px;"><strong>Hypothetical Situations:</strong> "If she <em>were</em> here, she would help us."</li>
+                            <li style="margin-bottom: 8px;"><strong>Wishes:</strong> "I wish I <em>were</em> taller." "He wishes he <em>were</em> rich."</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Conditional Sentences:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Second Conditional:</strong> "If I <em>had</em> money, I <em>would buy</em> a car."</li>
+                            <li style="margin-bottom: 8px;"><strong>Third Conditional:</strong> "If I <em>had known</em>, I <em>would have helped</em>."</li>
+                            <li style="margin-bottom: 8px;"><strong>Mixed Conditionals:</strong> "If I <em>had studied</em> harder, I <em>would be</em> successful now."</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Advanced Usage:</h5>
+                        <p style="margin-bottom: 15px;">The subjunctive is also used in formal expressions like "God bless you," "Long live the queen," and "Be that as it may." Understanding these patterns helps you express complex ideas with precision and sophistication.</p>`
+                    },
+                    {
+                        title: "Today's Advanced Grammar: Inversion",
+                        content: `<h4 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.3rem;">Understanding Inversion in English</h4>
+                        <p style="margin-bottom: 15px;">Inversion involves changing the normal word order of a sentence, typically placing the verb before the subject. This grammatical structure is used for emphasis, formality, and to create specific rhetorical effects in both spoken and written English.</p>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Negative Inversion:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Never:</strong> "<em>Never have I seen</em> such beauty." (Normal: "I have never seen such beauty.")</li>
+                            <li style="margin-bottom: 8px;"><strong>Rarely:</strong> "<em>Rarely does she speak</em> in public." (Normal: "She rarely speaks in public.")</li>
+                            <li style="margin-bottom: 8px;"><strong>Seldom:</strong> "<em>Seldom do we encounter</em> such generosity." (Normal: "We seldom encounter such generosity.")</li>
+                            <li style="margin-bottom: 8px;"><strong>Not only:</strong> "<em>Not only did she win</em>, but she also broke the record."</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Conditional Inversion:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Were:</strong> "<em>Were I you</em>, I would accept the offer." (If I were you...)</li>
+                            <li style="margin-bottom: 8px;"><strong>Had:</strong> "<em>Had I known</em>, I would have helped." (If I had known...)</li>
+                            <li style="margin-bottom: 8px;"><strong>Should:</strong> "<em>Should you need</em> help, call me." (If you should need...)</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Place and Direction Inversion:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Here/There:</strong> "<em>Here comes</em> the bus." "<em>There goes</em> my chance."</li>
+                            <li style="margin-bottom: 8px;"><strong>Prepositional Phrases:</strong> "<em>On the table sat</em> a beautiful vase."</li>
+                            <li style="margin-bottom: 8px;"><strong>Adverbs of Place:</strong> "<em>Down the street walked</em> an old man."</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Stylistic Effects:</h5>
+                        <p style="margin-bottom: 15px;">Inversion adds variety and sophistication to writing. It's commonly used in literature, formal speeches, and academic writing to create emphasis, build suspense, or achieve a more elegant style. However, overuse can make text sound unnatural.</p>`
+                    },
+                    {
+                        title: "Today's Advanced Grammar: Participle Clauses",
+                        content: `<h4 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.3rem;">Mastering Participle Clauses</h4>
+                        <p style="margin-bottom: 15px;">Participle clauses are complex grammatical structures that use present or past participles to create subordinate clauses. They allow for more concise and sophisticated sentence construction, combining multiple ideas into single, elegant sentences.</p>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Present Participle Clauses:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Simultaneous Actions:</strong> "<em>Walking down the street</em>, I saw an old friend."</li>
+                            <li style="margin-bottom: 8px;"><strong>Cause and Effect:</strong> "<em>Knowing the answer</em>, she raised her hand immediately."</li>
+                            <li style="margin-bottom: 8px;"><strong>Descriptive:</strong> "The man <em>wearing a red hat</em> is my brother."</li>
+                            <li style="margin-bottom: 8px;"><strong>Time:</strong> "<em>Arriving at the station</em>, I realized I had forgotten my ticket."</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Past Participle Clauses:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Passive Meaning:</strong> "<em>Written in 1925</em>, this book is still relevant today."</li>
+                            <li style="margin-bottom: 8px;"><strong>Completed Actions:</strong> "<em>Exhausted from the journey</em>, she fell asleep immediately."</li>
+                            <li style="margin-bottom: 8px;"><strong>Descriptive:</strong> "The book <em>published last year</em> became a bestseller."</li>
+                            <li style="margin-bottom: 8px;"><strong>Condition:</strong> "<em>Given the opportunity</em>, I would travel the world."</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Perfect Participle Clauses:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Having + Past Participle:</strong> "<em>Having finished</em> my work, I went home."</li>
+                            <li style="margin-bottom: 8px;"><strong>Sequence of Events:</strong> "<em>Having studied</em> for hours, I felt confident about the exam."</li>
+                            <li style="margin-bottom: 8px;"><strong>Cause and Effect:</strong> "<em>Having lost</em> my keys, I couldn't enter the house."</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Advanced Usage Tips:</h5>
+                        <p style="margin-bottom: 15px;">Participle clauses must have the same subject as the main clause. They're excellent for creating variety in sentence structure and avoiding repetitive patterns. Use them to combine related ideas and create more sophisticated, flowing prose.</p>`
+                    }
+                ],
+                'Business English': [
+                    {
+                        title: "Today's Business English: Professional Communication",
+                        content: `<h4 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.3rem;">Mastering Professional Business Communication</h4>
+                        <p style="margin-bottom: 15px;">Effective business communication is essential for career success. Professional English in the workplace requires specific vocabulary, tone, and structures that convey competence, respect, and clarity. Understanding these elements helps you navigate corporate environments with confidence.</p>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Business Email Etiquette:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Greetings:</strong> "Dear Mr. Smith," "Hello Team," "Good morning everyone"</li>
+                            <li style="margin-bottom: 8px;"><strong>Professional Closings:</strong> "Best regards," "Sincerely," "Thank you for your time"</li>
+                            <li style="margin-bottom: 8px;"><strong>Clear Subject Lines:</strong> "Meeting Request - Q4 Planning," "Project Update - Phase 2"</li>
+                            <li style="margin-bottom: 8px;"><strong>Concise Language:</strong> Avoid jargon, use active voice, be specific about deadlines</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Meeting and Presentation Language:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Opening:</strong> "Let's begin," "Thank you for joining us today," "I'd like to discuss"</li>
+                            <li style="margin-bottom: 8px;"><strong>Transitioning:</strong> "Moving on to," "Now let's turn to," "On that note"</li>
+                            <li style="margin-bottom: 8px;"><strong>Summarizing:</strong> "To recap," "In conclusion," "The key takeaways are"</li>
+                            <li style="margin-bottom: 8px;"><strong>Action Items:</strong> "Next steps include," "We need to," "Please follow up on"</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Negotiation and Persuasion:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Softening Language:</strong> "I understand your concern," "Perhaps we could," "Would you consider"</li>
+                            <li style="margin-bottom: 8px;"><strong>Building Consensus:</strong> "We're all working toward," "Our shared goal is," "Let's find common ground"</li>
+                            <li style="margin-bottom: 8px;"><strong>Expressing Disagreement:</strong> "I see it differently," "I have some reservations," "Let me offer an alternative"</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Professional Vocabulary:</h5>
+                        <p style="margin-bottom: 15px;">Master business terms like "stakeholder," "deliverables," "benchmark," "leverage," "synergy," and "paradigm shift." Use industry-specific terminology appropriately while ensuring your audience understands your message clearly.</p>`
+                    },
+                    {
+                        title: "Today's Business English: Financial and Economic Terms",
+                        content: `<h4 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.3rem;">Understanding Financial and Economic Language</h4>
+                        <p style="margin-bottom: 15px;">Financial literacy in English is crucial for business professionals. Understanding economic terminology, financial statements, and market vocabulary enables effective communication in corporate environments, investment discussions, and strategic planning sessions.</p>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Financial Statement Terms:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Revenue vs. Profit:</strong> Revenue is total income, profit is what remains after expenses</li>
+                            <li style="margin-bottom: 8px;"><strong>Assets and Liabilities:</strong> Assets are what you own, liabilities are what you owe</li>
+                            <li style="margin-bottom: 8px;"><strong>Cash Flow:</strong> The movement of money in and out of a business</li>
+                            <li style="margin-bottom: 8px;"><strong>Balance Sheet:</strong> Shows assets, liabilities, and equity at a specific point in time</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Market and Investment Vocabulary:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Bull vs. Bear Market:</strong> Bull markets rise, bear markets fall</li>
+                            <li style="margin-bottom: 8px;"><strong>ROI (Return on Investment):</strong> Measure of investment profitability</li>
+                            <li style="margin-bottom: 8px;"><strong>Diversification:</strong> Spreading investments across different assets</li>
+                            <li style="margin-bottom: 8px;"><strong>Volatility:</strong> Degree of price fluctuation in markets</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Economic Indicators:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>GDP (Gross Domestic Product):</strong> Total value of goods and services produced</li>
+                            <li style="margin-bottom: 8px;"><strong>Inflation:</strong> General increase in prices over time</li>
+                            <li style="margin-bottom: 8px;"><strong>Interest Rates:</strong> Cost of borrowing money, set by central banks</li>
+                            <li style="margin-bottom: 8px;"><strong>Unemployment Rate:</strong> Percentage of workforce without jobs</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Business Strategy Terms:</h5>
+                        <p style="margin-bottom: 15px;">Understand concepts like "competitive advantage," "market share," "scalability," "disruption," and "pivot." These terms are essential for strategic discussions, business planning, and understanding corporate communications.</p>`
+                    },
+                    {
+                        title: "Today's Business English: International Business and Culture",
+                        content: `<h4 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.3rem;">Navigating International Business Communication</h4>
+                        <p style="margin-bottom: 15px;">Global business requires understanding cultural nuances, international trade terminology, and cross-cultural communication strategies. Success in international markets depends on your ability to communicate effectively across cultural and linguistic barriers.</p>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">International Trade Terms:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Import/Export:</strong> Importing brings goods in, exporting sends goods out</li>
+                            <li style="margin-bottom: 8px;"><strong>Tariffs and Duties:</strong> Taxes on imported goods</li>
+                            <li style="margin-bottom: 8px;"><strong>Free Trade Agreements:</strong> Pacts reducing trade barriers between countries</li>
+                            <li style="margin-bottom: 8px;"><strong>Supply Chain:</strong> Network of organizations involved in production and distribution</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Cross-Cultural Communication:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>High vs. Low Context:</strong> High context relies on implicit communication, low context is explicit</li>
+                            <li style="margin-bottom: 8px;"><strong>Direct vs. Indirect:</strong> Some cultures prefer direct communication, others use indirect approaches</li>
+                            <li style="margin-bottom: 8px;"><strong>Time Orientation:</strong> Monochronic (linear time) vs. polychronic (flexible time)</li>
+                            <li style="margin-bottom: 8px;"><strong>Power Distance:</strong> How cultures handle hierarchy and authority</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Global Business Etiquette:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Greetings:</strong> Handshakes, bows, or other cultural greetings</li>
+                            <li style="margin-bottom: 8px;"><strong>Business Cards:</strong> Exchange protocols vary by culture</li>
+                            <li style="margin-bottom: 8px;"><strong>Gift Giving:</strong> Cultural norms for business gifts</li>
+                            <li style="margin-bottom: 8px;"><strong>Meeting Styles:</strong> Formal vs. informal, agenda flexibility</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Language Adaptation:</h5>
+                        <p style="margin-bottom: 15px;">Adapt your English for international audiences by avoiding idioms, using clear pronunciation, speaking at a moderate pace, and confirming understanding. Remember that English may be a second language for many business partners.</p>`
+                    }
+                ],
+                'Speaking Practice': [
+                    {
+                        title: "Today's Speaking: Pronunciation and Articulation",
+                        content: `<h4 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.3rem;">Mastering Clear Speech</h4>
+                        <p style="margin-bottom: 15px;">Clear pronunciation and proper articulation are fundamental to effective communication. Understanding the mechanics of speech production and practicing specific techniques helps you speak with confidence and clarity in any situation.</p>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Word Stress Patterns:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Primary Stress:</strong> The strongest emphasis on one syllable in a word</li>
+                            <li style="margin-bottom: 8px;"><strong>Secondary Stress:</strong> Medium emphasis on other important syllables</li>
+                            <li style="margin-bottom: 8px;"><strong>Unstressed Syllables:</strong> Lightly pronounced syllables that provide rhythm</li>
+                            <li style="margin-bottom: 8px;"><strong>Stress Shifts:</strong> How stress changes meaning in related words</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Articulation Techniques:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Lip Movement:</strong> Clear, deliberate lip positioning for consonant sounds</li>
+                            <li style="margin-bottom: 8px;"><strong>Tongue Placement:</strong> Precise tongue positioning for different speech sounds</li>
+                            <li style="margin-bottom: 8px;"><strong>Breath Control:</strong> Managing airflow for consistent volume and clarity</li>
+                            <li style="margin-bottom: 8px;"><strong>Jaw Movement:</strong> Opening the mouth sufficiently for clear vowel sounds</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Common Pronunciation Challenges:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Consonant Clusters:</strong> Groups of consonants that can be difficult to pronounce</li>
+                            <li style="margin-bottom: 8px;"><strong>Vowel Length:</strong> Distinguishing between short and long vowel sounds</li>
+                            <li style="margin-bottom: 8px;"><strong>Intonation:</strong> The rise and fall of pitch that conveys meaning</li>
+                            <li style="margin-bottom: 8px;"><strong>Linking:</strong> Connecting words smoothly in connected speech</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Practice Strategies:</h5>
+                        <p style="margin-bottom: 15px;">Record yourself speaking and listen for areas of improvement. Practice with tongue twisters to improve articulation. Read aloud regularly to build confidence and fluency. Focus on one aspect of pronunciation at a time rather than trying to perfect everything simultaneously.</p>`
+                    },
+                    {
+                        title: "Today's Speaking: Conversation Skills",
+                        content: `<h4 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.3rem;">Mastering English Conversation Skills</h4>
+                        <p style="margin-bottom: 15px;">Effective English conversation requires more than just vocabulary and grammar. It involves understanding cultural nuances, using appropriate expressions, and developing the confidence to engage in natural, flowing dialogue with native speakers and other learners.</p>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Essential Conversation Starters:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Weather:</strong> "Beautiful day, isn't it?" or "How's the weather treating you?"</li>
+                            <li style="margin-bottom: 8px;"><strong>Work/Studies:</strong> "How's work going?" or "What do you do for a living?"</li>
+                            <li style="margin-bottom: 8px;"><strong>Hobbies:</strong> "What do you like to do in your free time?" or "Any interesting hobbies?"</li>
+                            <li style="margin-bottom: 8px;"><strong>Current Events:</strong> "Did you hear about...?" or "What do you think about...?"</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Keeping Conversations Flowing:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Follow-up Questions:</strong> "That sounds interesting! How did you get into that?" or "What made you choose that?"</li>
+                            <li style="margin-bottom: 8px;"><strong>Showing Interest:</strong> "Really?" "That's fascinating!" "Tell me more about that."</li>
+                            <li style="margin-bottom: 8px;"><strong>Sharing Experiences:</strong> "I had a similar experience..." or "That reminds me of..."</li>
+                            <li style="margin-bottom: 8px;"><strong>Agreeing/Disagreeing:</strong> "I see what you mean" or "I have a different perspective on that"</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Common Conversation Scenarios:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>At a Party:</strong> "How do you know the host?" "Have you been to one of these before?"</li>
+                            <li style="margin-bottom: 8px;"><strong>In the Office:</strong> "How was your weekend?" "Any plans for the evening?"</li>
+                            <li style="margin-bottom: 8px;"><strong>At a Restaurant:</strong> "What do you recommend?" "Have you tried the..."</li>
+                            <li style="margin-bottom: 8px;"><strong>On Public Transport:</strong> "Excuse me, is this seat taken?" "Do you know when the next train comes?"</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Cultural Conversation Tips:</h5>
+                        <p style="margin-bottom: 15px;">In English-speaking cultures, small talk is important for building rapport. Topics like weather, sports, and current events are generally safe. Avoid asking about personal finances, age, or relationship status unless you know the person well. Remember to maintain appropriate eye contact and use polite expressions like "please," "thank you," and "excuse me" frequently.</p>`
+                    },
+                    {
+                        title: "Today's Speaking: Public Speaking Fundamentals",
+                        content: `<h4 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.3rem;">Confident Public Speaking</h4>
+                        <p style="margin-bottom: 15px;">Public speaking is a valuable skill that combines content preparation, delivery techniques, and audience engagement. Whether presenting to a small group or large audience, understanding the fundamentals helps you communicate your message effectively and confidently.</p>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Preparation Strategies:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Content Organization:</strong> Structuring your speech with clear introduction, body, and conclusion</li>
+                            <li style="margin-bottom: 8px;"><strong>Audience Analysis:</strong> Understanding your listeners' background, interests, and expectations</li>
+                            <li style="margin-bottom: 8px;"><strong>Practice Sessions:</strong> Rehearsing your speech multiple times to build confidence</li>
+                            <li style="margin-bottom: 8px;"><strong>Visual Aids:</strong> Creating supporting materials that enhance your message</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Delivery Techniques:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Voice Modulation:</strong> Varying pitch, pace, and volume for emphasis and engagement</li>
+                            <li style="margin-bottom: 8px;"><strong>Body Language:</strong> Using posture, gestures, and movement to reinforce your message</li>
+                            <li style="margin-bottom: 8px;"><strong>Eye Contact:</strong> Connecting with audience members through direct visual engagement</li>
+                            <li style="margin-bottom: 8px;"><strong>Pacing:</strong> Controlling the speed of your delivery for optimal comprehension</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Audience Engagement:</h5>
+                        <ul style="margin-bottom: 15px; padding-left: 20px;">
+                            <li style="margin-bottom: 8px;"><strong>Interactive Elements:</strong> Including questions, polls, or activities to involve listeners</li>
+                            <li style="margin-bottom: 8px;"><strong>Storytelling:</strong> Using narratives to illustrate points and maintain interest</li>
+                            <li style="margin-bottom: 8px;"><strong>Humor:</strong> Appropriately using wit to lighten the mood and connect with audience</li>
+                            <li style="margin-bottom: 8px;"><strong>Relevance:</strong> Making content directly applicable to audience needs and interests</li>
+                        </ul>
+                        
+                        <h5 style="color: #34495e; margin: 20px 0 10px 0; font-size: 1.1rem;">Managing Nervousness:</h5>
+                        <p style="margin-bottom: 15px;">Accept that some nervousness is normal and can actually enhance performance. Use breathing techniques, positive visualization, and thorough preparation to manage anxiety. Remember that your audience wants you to succeed and is generally supportive of speakers.</p>`
+                    }
+                ]
+            };
+            
+            const contentArray = contentMap[lessonType] || contentMap['Basic Grammar'];
+            const contentIndex = dayOfYear % contentArray.length;
+            return contentArray[contentIndex];
+        }
+        
+        // Show lesson detail with daily content
+        function showLesson(title, description) {
+            const lessonsGrid = document.getElementById('lessonsGrid');
+            const lessonDetail = document.getElementById('lessonDetail');
+            
+            lessonsGrid.style.display = 'none';
+            lessonDetail.style.display = 'block';
+            
+            const dailyContent = getDailyContent(title);
+            
+            document.getElementById('lessonDetailTitle').textContent = title;
+            document.getElementById('lessonDetailDescription').textContent = description;
+            document.getElementById('dailyContentTitle').textContent = dailyContent.title;
+            document.getElementById('dailyContentText').innerHTML = dailyContent.content; // Use innerHTML to render HTML
+        }
+
+        // Back to lessons grid
+        function backToLessons() {
+            document.getElementById('lessonDetail').style.display = 'none';
+            document.getElementById('lessonsGrid').style.display = 'grid';
+        }
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            loadStats();
+            console.log('Grammar Guru Call App loaded successfully');
+            
+            // Clean up any existing intervals when page is unloaded
+            window.addEventListener('beforeunload', function() {
+                if (callStatusInterval) {
+                    clearInterval(callStatusInterval);
+                }
+                if (callTimerInterval) {
+                    clearInterval(callTimerInterval);
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
